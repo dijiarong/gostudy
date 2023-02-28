@@ -1,3 +1,4 @@
+// 实现基础math功能：（加、减、乘、除）
 package mymath
 
 type myMath struct{}
