@@ -1,5 +1,7 @@
 package treenode
 
+import "gostudy/basic/mymath"
+
 type maxDepthTreeNode struct{}
 
 var MaxDepth maxDepthTreeNode
@@ -9,12 +11,5 @@ func (m maxDepthTreeNode) MaxDepth1(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-	return getMax(m.MaxDepth1(root.Left), m.MaxDepth1(root.Right)) + 1
-}
-
-func getMax(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return mymath.Math.GetMaxInt(m.MaxDepth1(root.Left), m.MaxDepth1(root.Right)) + 1
 }
