@@ -3,6 +3,8 @@ package treenode
 import "gostudy/basic/mymath"
 
 // 任意节点的左子树高度与右子树高度差不超过1的二叉树
+
+// 力扣网址:
 func IsAVLTree(root *TreeNode) bool {
 	// 开始递归，从根节点开始
 	res, _ := IsAVLTreeRec(root)

@@ -2,7 +2,7 @@ package mymath_test
 
 import (
 	"fmt"
-	"myself/mymath"
+	"gostudy/basic/mymath"
 	"testing"
 )
 
