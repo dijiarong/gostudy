@@ -3,7 +3,7 @@ package datastruct
 type Myheap []int
 
 func (m Myheap) Less(i, j int) bool {
-	return m[i] < m[j]
+	return m[i] > m[j]
 }
 
 func (m Myheap) Swap(i, j int) {

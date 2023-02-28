@@ -3,16 +3,18 @@ package main
 import (
 	"container/heap"
 	"fmt"
-	datastruct "myself/data_struct"
+	datastruct "gostudy/basic/data_struct"
 )
 
 func main() {
-	myHeap := &datastruct.Myheap{1, 2, 3, 4, 5}
+	myHeap := &datastruct.Myheap{8, 2, 10, 4, 5}
 	heap.Init(myHeap)
 	println(fmt.Sprintf("%+v", myHeap))
 	heap.Push(myHeap, 0)
 	println(fmt.Sprintf("%+v", myHeap))
-	println(heap.Pop(myHeap))
+	fmt.Printf("%+v", heap.Pop(myHeap))
+	println(fmt.Sprintf("%+v", myHeap))
+	fmt.Printf("%+v", heap.Pop(myHeap))
 	println(fmt.Sprintf("%+v", myHeap))
 }
 
