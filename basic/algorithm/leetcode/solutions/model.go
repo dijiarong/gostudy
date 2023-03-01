@@ -1,10 +1,19 @@
-package hard
+package solutions
 
-import (
-	"gostudy/basic/algorithm/listnode"
-)
+// 树
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
 
-type Heap []*listnode.ListNode
+// 链表
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+type Heap []*ListNode
 
 func (h Heap) Len() int {
 	return len(h)
@@ -21,7 +30,7 @@ func (h Heap) Swap(i, j int) {
 }
 
 func (h *Heap) Push(a any) {
-	*h = append(*h, a.(*listnode.ListNode))
+	*h = append(*h, a.(*ListNode))
 }
 
 func (h *Heap) Pop() any {

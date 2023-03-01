@@ -1,7 +1,6 @@
-package hard_test
+package solutions
 
 import (
-	"gostudy/basic/algorithm/leetcode/hard"
 	"gostudy/basic/algorithm/listnode"
 	"testing"
 )
@@ -16,5 +15,5 @@ func TestMergeKLists(t *testing.T) {
 	node1 := &listnode.ListNode{Val: 2, Next: node2}
 	lists = append(lists, node1)
 	lists = append(lists, node4)
-	hard.MergeKLists(lists)
+	MergeKLists(lists)
 }

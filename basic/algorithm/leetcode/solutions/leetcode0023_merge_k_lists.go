@@ -1,15 +1,14 @@
-package hard
+package solutions
 
 import (
 	"container/heap"
-	"gostudy/basic/algorithm/listnode"
 	"sort"
 )
 
 // 合并k个升序链表
 // https://leetcode.cn/problems/merge-k-sorted-lists/
 // 解法1自己维护一个堆，频繁拷贝效率很低
-func MergeKLists1(lists []*listnode.ListNode) *listnode.ListNode {
+func MergeKLists1(lists []*ListNode) *ListNode {
 	if len(lists) < 1 {
 		return nil
 	}
@@ -17,7 +16,7 @@ func MergeKLists1(lists []*listnode.ListNode) *listnode.ListNode {
 		return lists[0]
 	}
 	// 维护一个最小堆
-	heapTmp := make([]*listnode.ListNode, 0, len(lists))
+	heapTmp := make([]*ListNode, 0, len(lists))
 	for _, v := range lists {
 		if v != nil {
 			heapTmp = append(heapTmp, v)
@@ -27,7 +26,7 @@ func MergeKLists1(lists []*listnode.ListNode) *listnode.ListNode {
 	sort.Slice(heapTmp, func(i, j int) bool {
 		return heapTmp[i].Val < heapTmp[j].Val
 	})
-	head := &listnode.ListNode{Val: -1, Next: nil}
+	head := &ListNode{Val: -1, Next: nil}
 	curNode := head
 	for len(heapTmp) != 0 {
 		curNode.Next = heapTmp[0]
@@ -44,20 +43,20 @@ func MergeKLists1(lists []*listnode.ListNode) *listnode.ListNode {
 }
 
 // 解法2实现系统的heap接口，这样效率高
-func MergeKLists(lists []*listnode.ListNode) *listnode.ListNode {
+func MergeKLists(lists []*ListNode) *ListNode {
 	heapQueue := new(Heap)
 	for _, v := range lists {
 		if v != nil {
 			heap.Push(heapQueue, v)
 		}
 	}
-	preHead := &listnode.ListNode{
+	preHead := &ListNode{
 		Val:  0,
 		Next: nil,
 	}
 	cur := preHead
 	for heapQueue.Len() != 0 {
-		cur.Next = heap.Pop(heapQueue).(*listnode.ListNode)
+		cur.Next = heap.Pop(heapQueue).(*ListNode)
 		cur = cur.Next
 		if cur.Next != nil {
 			heap.Push(heapQueue, cur.Next)
