@@ -3,19 +3,20 @@ package main
 import (
 	"container/heap"
 	"fmt"
+	mysort "gostudy/basic/algorithm/sort"
 	datastruct "gostudy/basic/data_struct"
+	"sort"
 )
 
 func main() {
-	myHeap := &datastruct.Myheap{8, 2, 10, 4, 5}
-	heap.Init(myHeap)
-	println(fmt.Sprintf("%+v", myHeap))
-	heap.Push(myHeap, 0)
-	println(fmt.Sprintf("%+v", myHeap))
-	fmt.Printf("%+v", heap.Pop(myHeap))
-	println(fmt.Sprintf("%+v", myHeap))
-	fmt.Printf("%+v", heap.Pop(myHeap))
-	println(fmt.Sprintf("%+v", myHeap))
+	list1 := []int{12, 345, 54, 213, 5, 67, 8}
+	list2 := []int{12, 345, 54, 213, 5, 67, 8}
+	mysort.MergeSort(list1)
+	sort.Slice(list2, func(i, j int) bool {
+		return list2[i] <= list2[j]
+	})
+	println(fmt.Sprintf("%v", list1))
+	println(fmt.Sprintf("%v", list2))
 }
 
 func Test1() {
@@ -29,4 +30,16 @@ func Test1() {
 	a := m[1]
 	a.ID = 2
 	print(fmt.Sprintf("%+v", m))
+}
+
+func Test2() {
+	myHeap := &datastruct.Myheap{8, 2, 10, 4, 5}
+	heap.Init(myHeap)
+	println(fmt.Sprintf("%+v", myHeap))
+	heap.Push(myHeap, 0)
+	println(fmt.Sprintf("%+v", myHeap))
+	fmt.Printf("%+v", heap.Pop(myHeap))
+	println(fmt.Sprintf("%+v", myHeap))
+	fmt.Printf("%+v", heap.Pop(myHeap))
+	println(fmt.Sprintf("%+v", myHeap))
 }
