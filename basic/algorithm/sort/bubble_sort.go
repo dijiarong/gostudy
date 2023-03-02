@@ -9,7 +9,7 @@ func BubbleSort(list []int) []int {
 	for i := 1; i <= length; i++ {
 		for j := 0; j < length-i; j++ {
 			if list[j] > list[j+1] {
-				Sort.Swap(list, j, j+1)
+				Swap(&list, j, j+1)
 			}
 		}
 	}

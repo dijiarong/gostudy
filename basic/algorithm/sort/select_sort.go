@@ -14,7 +14,7 @@ func SelectSort(list []int) []int {
 			}
 		}
 		if maxIndex != i {
-			Sort.Swap(list, i, maxIndex)
+			Swap(&list, i, maxIndex)
 		}
 	}
 	return list
