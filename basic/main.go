@@ -2,6 +2,7 @@ package main
 
 import (
 	"container/heap"
+	"encoding/json"
 	"fmt"
 	mysort "gostudy/basic/algorithm/sort"
 	datastruct "gostudy/basic/data_struct"
@@ -9,6 +10,15 @@ import (
 )
 
 func main() {
+	a := make([][]int, 0, 1)
+	b, _ := json.Marshal(a)
+	println(string(b))
+	c := make([]int, 0, 1)
+	err := json.Unmarshal(b, &c)
+	fmt.Printf("%+v\n", err)
+	fmt.Printf("%+v\n", a)
+	a = append(a, []int{1})
+	fmt.Printf("%+v\n", a)
 	list1 := []int{12, 345, 54, 213, 5, 67, 8}
 	list2 := []int{12, 345, 54, 213, 5, 67, 8}
 	mysort.MergeSort(list1)

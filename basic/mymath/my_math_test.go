@@ -14,4 +14,10 @@ func TestGetNote(t *testing.T) {
 	println(fmt.Sprintf("%d * %d = %d", a, b, mymath.Math.Multi(a, b)))
 	println(fmt.Sprintf("%d / %d = %d", a, b, mymath.Math.Div(a, b)))
 	println(string([]rune("<em>")))
+	type mmmm struct {
+	}
+	c := new(mmmm)
+	d := new(mmmm)
+	println(c)
+	println(d)
 }
