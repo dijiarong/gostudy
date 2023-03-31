@@ -2,31 +2,60 @@ package main
 
 import (
 	"container/heap"
-	"encoding/json"
+	"context"
 	"fmt"
-	mysort "gostudy/basic/algorithm/sort"
 	datastruct "gostudy/basic/data_struct"
-	"sort"
+
+	"github.com/sashabaranov/go-openai"
 )
 
 func main() {
-	a := make([][]int, 0, 1)
-	b, _ := json.Marshal(a)
-	println(string(b))
-	c := make([]int, 0, 1)
-	err := json.Unmarshal(b, &c)
-	fmt.Printf("%+v\n", err)
-	fmt.Printf("%+v\n", a)
-	a = append(a, []int{1})
-	fmt.Printf("%+v\n", a)
-	list1 := []int{12, 345, 54, 213, 5, 67, 8}
-	list2 := []int{12, 345, 54, 213, 5, 67, 8}
-	mysort.MergeSort(list1)
-	sort.Slice(list2, func(i, j int) bool {
-		return list2[i] <= list2[j]
-	})
-	println(fmt.Sprintf("%v", list1))
-	println(fmt.Sprintf("%v", list2))
+	// conf := gogpt.DefaultConfig("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")
+	// // proxyAddress, _ := url.Parse("http://127.0.0.1:8081")
+	// // conf.HTTPClient = &http.Client{
+	// // 	Transport: &http.Transport{
+	// // 		Proxy: http.ProxyURL(proxyAddress),
+	// // 	},
+	// // }
+
+	// gptClient := gogpt.NewClientWithConfig(conf)
+
+	// req := gogpt.ChatCompletionRequest{
+	// 	Model:     gogpt.GPT3Dot5Turbo0301,
+	// 	MaxTokens: 100,
+	// 	Stream:    false,
+	// 	Messages: []gogpt.ChatCompletionMessage{
+	// 		{
+	// 			Role:    "assistant",
+	// 			Content: "用golang写一个堆排序",
+	// 		},
+	// 	},
+	// }
+	// resp, err := gptClient.CreateChatCompletion(context.Background(), req)
+	// if err != nil {
+	// 	return
+	// }
+	// fmt.Printf("%+v", resp)
+	client := openai.NewClient("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")
+	resp, err := client.CreateChatCompletion(
+		context.Background(),
+		openai.ChatCompletionRequest{
+			Model: openai.GPT3Dot5Turbo,
+			Messages: []openai.ChatCompletionMessage{
+				{
+					Role:    openai.ChatMessageRoleUser,
+					Content: "Hello!",
+				},
+			},
+		},
+	)
+
+	if err != nil {
+		fmt.Printf("ChatCompletion error: %v\n", err)
+		return
+	}
+
+	fmt.Println(resp.Choices[0].Message.Content)
 }
 
 func Test1() {

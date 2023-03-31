@@ -21,6 +21,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/russross/blackfriday/v2 v2.0.1 // indirect
+	github.com/sashabaranov/go-openai v1.5.6
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/swaggo/echo-swagger v1.3.5 // indirect
 	github.com/swaggo/files v1.0.0 // indirect
