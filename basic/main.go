@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	// conf := gogpt.DefaultConfig("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")
+	// conf := gogpt.DefaultConfig("")
 	// // proxyAddress, _ := url.Parse("http://127.0.0.1:8081")
 	// // conf.HTTPClient = &http.Client{
 	// // 	Transport: &http.Transport{
@@ -36,7 +36,7 @@ func main() {
 	// 	return
 	// }
 	// fmt.Printf("%+v", resp)
-	client := openai.NewClient("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")
+	client := openai.NewClient("")
 	resp, err := client.CreateChatCompletion(
 		context.Background(),
 		openai.ChatCompletionRequest{
