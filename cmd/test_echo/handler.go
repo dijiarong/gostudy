@@ -50,5 +50,3 @@ func (receiver PrintName) main(c echo.Context) error {
 func (receiver PrintName) router() {
 	GetEcho().Add("GET", "/print-name", receiver.main)
 }
-
-heap
