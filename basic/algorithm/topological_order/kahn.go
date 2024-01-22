@@ -79,7 +79,7 @@ func push(list []int, value int) []int {
 	return result
 }
 
-func main() {
+func test() {
 	// 创建八个节点的无向图
 	g := NewGraph(8)
 	g.addVertex(2, 1)

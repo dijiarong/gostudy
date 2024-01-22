@@ -37,7 +37,7 @@ func main() {
 	// }
 	// fmt.Printf("%+v", resp)
 	client := openai.NewClient("")
-	resp, err := client.CreateChatCompletion(
+	resp, err := client.CreateChatCompletionStream(
 		context.Background(),
 		openai.ChatCompletionRequest{
 			Model: openai.GPT3Dot5Turbo,
