@@ -10,32 +10,6 @@ import (
 )
 
 func main() {
-	// conf := gogpt.DefaultConfig("")
-	// // proxyAddress, _ := url.Parse("http://127.0.0.1:8081")
-	// // conf.HTTPClient = &http.Client{
-	// // 	Transport: &http.Transport{
-	// // 		Proxy: http.ProxyURL(proxyAddress),
-	// // 	},
-	// // }
-
-	// gptClient := gogpt.NewClientWithConfig(conf)
-
-	// req := gogpt.ChatCompletionRequest{
-	// 	Model:     gogpt.GPT3Dot5Turbo0301,
-	// 	MaxTokens: 100,
-	// 	Stream:    false,
-	// 	Messages: []gogpt.ChatCompletionMessage{
-	// 		{
-	// 			Role:    "assistant",
-	// 			Content: "用golang写一个堆排序",
-	// 		},
-	// 	},
-	// }
-	// resp, err := gptClient.CreateChatCompletion(context.Background(), req)
-	// if err != nil {
-	// 	return
-	// }
-	// fmt.Printf("%+v", resp)
 	client := openai.NewClient("")
 	resp, err := client.CreateChatCompletionStream(
 		context.Background(),
@@ -49,13 +23,11 @@ func main() {
 			},
 		},
 	)
-
 	if err != nil {
 		fmt.Printf("ChatCompletion error: %v\n", err)
 		return
 	}
-
-	fmt.Println(resp.Choices[0].Message.Content)
+	fmt.Println(resp)
 }
 
 func Test1() {
