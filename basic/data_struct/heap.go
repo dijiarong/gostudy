@@ -17,6 +17,9 @@ func (m *Myheap) Push(x any) {
 }
 
 func (m *Myheap) Pop() any {
+	if m.Len() == 0 {
+		return nil
+	}
 	val := (*m)[len(*m)-1]
 	*m = (*m)[:len(*m)-1]
 	return val
