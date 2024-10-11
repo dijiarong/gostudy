@@ -7,17 +7,21 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func pathSum(root *TreeNode, targetSum int) int {
-	return digui(root, targetSum)
-}
-
-func digui(root *TreeNode, targetSum int) int {
-	res := 0
-	if root == nil {
-		return 0
+func pathSum(root *TreeNode, targetSum int) (ans int) {
+	cnt := map[int]int{
+		0: 1,
 	}
-	if targetSum == 0 {
-		res += 1
+	var digui func(root *TreeNode, targetSum int)
+	digui = func(root *TreeNode, targetSum int) {
+		if root == nil {
+			return
+		}
+		targetSum += root.Val
+		ans += cnt[targetSum]
+		cnt[targetSum]++
+		digui(root.Left, targetSum)
+		digui(root.Right, targetSum)
+		cnt[targetSum]--
 	}
-	return res + digui(root.Left, targetSum-root.Val) + digui(root.Right, targetSum-root.Val) + digui(root.Left, targetSum) + digui(root.Right, targetSum)
+	return
 }
