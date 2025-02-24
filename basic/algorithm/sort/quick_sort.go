@@ -10,11 +10,11 @@ func Quic(list *[]int, left, right int) {
 	}
 	// 小于区域
 	minArea := left - 1
-	maxArea := right - 1
+	maxArea := right
 	index := left
 	for index < maxArea {
 		if (*list)[index] > (*list)[right] {
-			Swap(list, index, maxArea)
+			Swap(list, index, maxArea-1)
 			maxArea -= 1
 		} else if (*list)[index] == (*list)[right] {
 			index += 1
