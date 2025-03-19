@@ -1,5 +1,6 @@
 package count_of_substrings_containing_every_vowel_and_k_consonants_i
 
+// 滑动窗口， 将问题转化，最少包含k个辅音字母 - 最少包含k-1个辅音字母的为答案
 var yuanMap = map[byte]bool{
 	'a': true,
 	'e': true,
