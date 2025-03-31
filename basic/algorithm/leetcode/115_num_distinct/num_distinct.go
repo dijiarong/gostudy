@@ -29,7 +29,7 @@ func dp(s, t string, sIndex, tIndex int, memo [][]int) int {
 	if s[sIndex] == t[tIndex] {
 		res = dp(s, t, sIndex+1, tIndex+1, memo) + dp(s, t, sIndex+1, tIndex, memo)
 	} else {
-		res = dp(s, t, sIndex+1, tIndex+1, memo)
+		res = dp(s, t, sIndex+1, tIndex, memo)
 	}
 	memo[sIndex][tIndex] = res
 	return res
