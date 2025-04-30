@@ -1,0 +1,46 @@
+{
+    "mcpServers": {
+        "qgmj7Do8lXsMXyCu7I8SX": {
+            "name": "计算",
+            "type": "stdio",
+            "description": "简单计算",
+            "isActive": false,
+            "command": "C:\\Program Files\\Go\\bin\\go",
+            "args": [
+                "D:\\gostudy\\ai\\mcp\\first\\main.go"
+            ]
+        },
+        "9mWAl321OxiUC63XLkhOl": {
+            "isActive": true,
+            "name": "server-filesystem",
+            "type": "stdio",
+            "description": "MCP server for filesystem access\n\n用法: npx @modelcontextprotocol/server-filesystem\nNPM: https://www.npmjs.com/package/@modelcontextprotocol/server-filesystem",
+            "registryUrl": "",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "D:\\download"
+            ]
+        },
+        "mongodb": {
+            "isActive": true,
+            "command": "npx",
+            "args": [
+                "-y",
+                "mcp-mongo-server",
+                "mongodb://localhost:27017/studentManagement"
+            ],
+            "name": "mongodb"
+        },
+        "ffffff": {
+            "isActive": true,
+            "command": "C:\\Program Files\\Go\bin",
+            "args": [
+                "D:\\gostudy\\ai\\mcp\\first\\main.go"
+            ],
+            "name": "计算器",
+            "transportType":"stdio"
+        }
+    }
+}

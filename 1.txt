@@ -1,0 +1,3 @@
+C:/Users/dijia/.cherrystudio/bin/uv
+
+C:/Program Files/Go/bin/go
