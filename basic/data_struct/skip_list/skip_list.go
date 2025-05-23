@@ -1,8 +1,6 @@
 package skip_list
 
-import (
-	"math/rand"
-)
+import "math/rand"
 
 type SkipList struct {
 	head *node
@@ -15,146 +13,161 @@ type node struct {
 }
 
 func (s *SkipList) Get(key int) (int, bool) {
-	if _node := s.search(key); _node != nil {
-		return _node.Value, true
+	if n := s.search(key); n != nil {
+		return n.Value, true
 	}
-	return 0, false
+	return -1, false
 }
 
-func (s *SkipList) search(key int) *node {
-	move := s.head
-	// 从高层一层一层读取
-	level := len(s.head.Nexts) - 1
-	for level := level; level >= 0; level-- {
-		// 同层查询
-		for move.Nexts[level] != nil && move.Nexts[level].Key < key {
-			move = move.Nexts[level]
-		}
-		// 上面循环结束，move同层下一个元素的key如果==key
-		if move.Nexts[level] != nil && move.Nexts[level].Key == key {
-			return move.Nexts[level]
-		}
-	}
-	return nil
-}
-
-func (s *SkipList) Put(key int, value int) {
-	// 查询如果存在则更新
-	if _node := s.search(key); _node != nil {
-		_node.Value = value
+func (s *SkipList) Put(key, value int) {
+	if n := s.search(key); n != nil {
+		n.Value = value
 		return
 	}
-	// 随机层数
+	// 如果不存在需要插入
+	// 1.确认层数
 	level := s.roll()
-	move := s.head
+	// 2.如果该节点层数超过了已有层数需要处理一下
+	for len(s.head.Nexts)-1 < level {
+		s.head.Nexts = append(s.head.Nexts, nil)
+	}
+	// 3.初始化新节点
 	newNode := &node{
 		Key:   key,
 		Value: value,
 		Nexts: make([]*node, level+1),
 	}
+	n := s.head
+	// 4.一层一层处理新整节点
 	for level := level; level >= 0; level-- {
-		// 同层查询
-		for move.Nexts[level] != nil && move.Nexts[level].Key < key {
-			move = move.Nexts[level]
+		// 找到最接近的节点
+		for n.Nexts[level] != nil && n.Nexts[level].Key < key {
+			n = n.Nexts[level]
 		}
-		newNode.Nexts[level] = move.Nexts[level]
-		move.Nexts[level] = newNode
+		// 插入该节点
+		newNode.Nexts[level] = n.Nexts[level]
+		n.Nexts[level] = newNode
 	}
 }
 
 func (s *SkipList) Del(key int) {
-	// 查询如果存在则更新
-	if _node := s.search(key); _node == nil {
+	if n := s.search(key); n == nil {
 		return
 	}
-	move := s.head
-	level := len(move.Nexts) - 1
+	n := s.head
+	level := len(s.head.Nexts) - 1
 	for level := level; level >= 0; level-- {
-		for move.Nexts[level] != nil && move.Nexts[level].Key < key {
-			move = move.Nexts[level]
+		for n.Nexts[level] != nil && n.Nexts[level].Key < key {
+			n = n.Nexts[level]
 		}
-		if move.Nexts[level] == nil || move.Nexts[level].Key > key {
+		if n.Nexts[level] == nil || n.Nexts[level].Key > key {
 			continue
 		}
-		move.Nexts[level] = move.Nexts[level].Nexts[level]
+		n.Nexts[level] = n.Nexts[level].Nexts[level]
 	}
-	// 删除元素后要检查是否要降低高度
 	incre := 0
-	for level := len(s.head.Nexts); level > 0 && s.head.Nexts[level] == nil; level-- {
+	for level := len(s.head.Nexts) - 1; level > 0 && s.head.Nexts[level] == nil; level-- {
 		incre++
 	}
-	s.head.Nexts = s.head.Nexts[:len(s.head.Nexts)-incre]
-}
-
-func (s *SkipList) roll() int {
-	var level int
-	// 每次投出 1，则层数加 1
-	for rand.Intn(2) == 0 {
-		level++
+	if incre > 0 {
+		s.head.Nexts = s.head.Nexts[:len(s.head.Nexts)-incre]
 	}
-	return level
 }
 
 func (s *SkipList) Range(start, end int) [][2]int {
 	res := [][2]int{}
-	// 首先获取离start最近的
-	startnode := s.celling(start)
-	if startnode == nil {
-		return res
-	}
-	for move := startnode; move != nil && move.Key <= end; move = move.Nexts[0] {
-		res = append(res, [2]int{move.Key, move.Value})
-	}
-	return res
-}
-
-func (s *SkipList) Celling(stat int) [2]int {
-	res := [2]int{}
-	n := s.celling(stat)
+	// 找到开始节点
+	n := s.celling(start)
 	if n == nil {
 		return res
 	}
-	// 首先获取离start最近的
-	res[0] = n.Key
-	res[1] = n.Value
+	for cur := n; cur != nil && cur.Key <= end; cur = cur.Nexts[0] {
+		res = append(res, [2]int{cur.Key, cur.Value})
+	}
 	return res
 }
 
-func (s *SkipList) celling(stat int) *node {
-	move := s.head
-	for level := len(s.head.Nexts) - 1; level >= 0; level-- {
-		for move.Nexts[level] != nil && move.Nexts[level].Key < stat {
-			move = move.Nexts[level]
+func (s *SkipList) Celling(key int) [2]int {
+	res := [2]int{}
+	n := s.celling(key)
+	if n != nil {
+		res[0] = n.Key
+		res[1] = n.Value
+	}
+	return res
+}
+
+// 大于key的最小值
+func (s *SkipList) celling(key int) *node {
+	level := len(s.head.Nexts) - 1
+	n := s.head
+	// 一层一层找
+	for level := level; level >= 0; level-- {
+		// 沿着当前层找到最接近key的node
+		for n.Nexts[level] != nil && n.Nexts[level].Key < key {
+			n = n.Nexts[level]
 		}
-		if move.Nexts[level] != nil && move.Nexts[level].Key == stat {
-			return move.Nexts[level]
+		// 判断一下，如果相等直接返回
+		if n.Nexts[level] != nil && n.Nexts[level].Key == key {
+			return n.Nexts[level]
 		}
 	}
-	// 首先获取离start最近的
-	return move.Nexts[0]
+	return n.Nexts[0]
 }
 
 func (s *SkipList) Floor(key int) [2]int {
 	res := [2]int{}
 	n := s.floor(key)
-	if n == nil {
-		return res
+	if n != nil {
+		res[0] = n.Key
+		res[1] = n.Value
 	}
-	res[0] = n.Key
-	res[1] = n.Value
 	return res
 }
 
-func (s *SkipList) floor(stat int) *node {
-	move := s.head
-	for level := len(s.head.Nexts) - 1; level >= 0; level-- {
-		for move.Nexts[level] != nil && move.Nexts[level].Key < stat {
-			move = move.Nexts[level]
+// 小于key的最大值
+func (s *SkipList) floor(key int) *node {
+	level := len(s.head.Nexts) - 1
+	n := s.head
+	// 一层一层找
+	for level := level; level >= 0; level-- {
+		// 沿着当前层找到最接近key的node
+		for n.Nexts[level] != nil && n.Nexts[level].Key < key {
+			n = n.Nexts[level]
 		}
-		if move.Nexts[level] != nil && move.Nexts[level].Key == stat {
-			return move.Nexts[level]
+		// 判断一下，如果相等直接返回
+		if n.Nexts[level] != nil && n.Nexts[level].Key == key {
+			return n.Nexts[level]
 		}
 	}
-	// 首先获取离start最近的
-	return move
+	return n
+}
+
+// 限制最大层数，避免层数过高
+const MaxLevel = 16
+
+func (s *SkipList) roll() int {
+	var level int
+	// 每次投出 0，则层数加 1，但要限制最大层数
+	for rand.Intn(2) == 0 && level < MaxLevel {
+		level++
+	}
+	return level
+}
+
+func (s *SkipList) search(key int) *node {
+	level := len(s.head.Nexts) - 1
+	n := s.head
+	// 一层一层找
+	for level := level; level >= 0; level-- {
+		// 沿着当前层找到最接近key的node
+		for n.Nexts[level] != nil && n.Nexts[level].Key < key {
+			n = n.Nexts[level]
+		}
+		// 判断一下，如果相等直接返回
+		if n.Nexts[level] != nil && n.Nexts[level].Key == key {
+			return n.Nexts[level]
+		}
+	}
+	return nil
 }
